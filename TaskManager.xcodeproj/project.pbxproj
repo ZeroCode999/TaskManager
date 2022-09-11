@@ -112,6 +112,32 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		CE944AE828CE51E400D70E4E /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				CEB0596B28CE147600154659 /* TaskManager.xcdatamodeld */,
+				CEB0596228CE147600154659 /* AppDelegate.swift */,
+				CEB0596E28CE147600154659 /* Assets.xcassets */,
+				CEB0597028CE147600154659 /* LaunchScreen.storyboard */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		CE944AE928CE525900D70E4E /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				CEB0596628CE147600154659 /* TaskListViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		CE944AEA28CE52A400D70E4E /* Manager */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Manager;
+			sourceTree = "<group>";
+		};
 		CEB0595628CE147500154659 = {
 			isa = PBXGroup;
 			children = (
@@ -137,12 +163,10 @@
 		CEB0596128CE147600154659 /* TaskManager */ = {
 			isa = PBXGroup;
 			children = (
-				CEB0596228CE147600154659 /* AppDelegate.swift */,
-				CEB0596628CE147600154659 /* TaskListViewController.swift */,
-				CEB0596E28CE147600154659 /* Assets.xcassets */,
-				CEB0597028CE147600154659 /* LaunchScreen.storyboard */,
+				CE944AE828CE51E400D70E4E /* Support */,
+				CE944AEA28CE52A400D70E4E /* Manager */,
+				CE944AE928CE525900D70E4E /* ViewControllers */,
 				CEB0597328CE147600154659 /* Info.plist */,
-				CEB0596B28CE147600154659 /* TaskManager.xcdatamodeld */,
 			);
 			path = TaskManager;
 			sourceTree = "<group>";
