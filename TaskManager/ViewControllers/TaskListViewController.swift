@@ -6,14 +6,23 @@
 //
 
 import UIKit
-import CoreData
 
-class TaskListViewController: UITableViewController {
-    
-    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+final class TaskListViewController: UITableViewController {
     
     private let cellID = "cell"
-    private var tasks: [Task] = []
+    private var taskList: [Task] = []
+    
+    private var dataManager: DataManagerProtocol!
+
+    init(dataManager: DataManagerProtocol) {
+      super.init(nibName: nil, bundle: nil)
+      
+      self.dataManager = dataManager
+    }
+    
+    required init?(coder: NSCoder) {
+      fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,7 +34,7 @@ class TaskListViewController: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchData()
+        self.fetchData()
     }
 
     // MARK: - Setup View
@@ -67,12 +76,12 @@ class TaskListViewController: UITableViewController {
 // MARK: - TableView
 extension TaskListViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        tasks.count
+        taskList.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath)
-        let task = tasks[indexPath.row]
+        let task = taskList[indexPath.row]
         
         var content = cell.defaultContentConfiguration()
         content.text = task.name
@@ -80,21 +89,15 @@ extension TaskListViewController {
         return cell
     }
     
-}
-
-// MARK: - Manipulate with data
-extension TaskListViewController {
-    private func fetchData() {
-        let fetchRequest: NSFetchRequest<Task> = Task.fetchRequest()
-        
-        do {
-            tasks = try context.fetch(fetchRequest)
-            tableView.reloadData()
-        } catch let error {
-            print(error)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            self.delete(forRowAt: indexPath)
         }
     }
-    
+}
+
+// MARK: - Alerts
+extension TaskListViewController {
     private func showAlert(withTitle title: String, andMessage message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
@@ -109,25 +112,26 @@ extension TaskListViewController {
         alert.addAction(cancelAction)
         present(alert, animated: true)
     }
-    
+}
+
+// MARK: - Manipulate with data
+extension TaskListViewController {
+    private func fetchData() {
+        taskList = dataManager.fetchData()
+        tableView.reloadData()
+    }
+
     private func save(_ taskName: String) {
-        guard let entityDescription = NSEntityDescription.entity(forEntityName: "Task", in: context) else { return }
-        guard let task = NSManagedObject(entity: entityDescription, insertInto: context) as? Task else { return }
-        
-        task.name = taskName
-        tasks.append(task)
-        
-        let cellIndex = IndexPath(row: tasks.count - 1, section: 0)
+        let task = dataManager.save(taskName)
+        taskList.append(task)
+
+        let cellIndex = IndexPath(row: taskList.count - 1, section: 0)
         tableView.insertRows(at: [cellIndex], with: .automatic)
-        
-        if context.hasChanges {
-            do {
-                try context.save()
-            } catch let error {
-                print(error)
-            }
-        }
-        
-        dismiss(animated: true)
+    }
+
+    private func delete(forRowAt indexPath: IndexPath) {
+        taskList.remove(at: indexPath.row)
+        dataManager.delete(indexPath: indexPath)
+        tableView.deleteRows(at: [indexPath], with: .fade)
     }
 }
