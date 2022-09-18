@@ -67,8 +67,8 @@ final class TaskListViewController: UITableViewController {
     }
     
     // MARK: Actions
-    @objc private func addNewTask() {        
-        showAlert(withTitle: "New Task", andMessage: "Do you want to add a new task?")
+    @objc private func addNewTask() {
+        showAlert()
     }
     
 }
@@ -94,22 +94,45 @@ extension TaskListViewController {
             self.delete(forRowAt: indexPath)
         }
     }
+    
+    override func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let task = taskList[indexPath.row]
+        
+        let deleteAction = UIContextualAction(style: .destructive, title: "Delete") {
+            (_, _, _) in
+            self.delete(forRowAt: indexPath)
+        }
+        
+        let editAction = UIContextualAction(style: .normal, title: "Edit") { (_, _, isDone) in
+            self.showAlert(task: task) {
+                tableView.reloadRows(at: [indexPath], with: .automatic)
+            }
+            isDone(true)
+        }
+        
+        editAction.backgroundColor = .orange
+        
+        return UISwipeActionsConfiguration(actions: [editAction, deleteAction])
+    }
 }
 
 // MARK: - Alerts
 extension TaskListViewController {
-    private func showAlert(withTitle title: String, andMessage message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+    private func showAlert(task: Task? = nil, completion: (() -> Void)? = nil) {
+        let title = task != nil ? "Edit List" : "New List"
         
-        let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-            guard let task = alert.textFields?.first?.text, !task.isEmpty else { return }
-            self.save(task)
+        let alert = AlertController(title: title, message: "Please insert new value", preferredStyle: .alert)
+        
+        alert.action(with: task) { newValue in
+            if let task = task, let completion = completion {
+                self.edit(task: task, newName: newValue)
+                completion()
+            } else {
+                guard let task = alert.textFields?.first?.text, !task.isEmpty else { return }
+                self.save(task)
+            }
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .destructive)
-        alert.addTextField()
-        alert.addAction(saveAction)
-        alert.addAction(cancelAction)
         present(alert, animated: true)
     }
 }
@@ -127,6 +150,10 @@ extension TaskListViewController {
 
         let cellIndex = IndexPath(row: taskList.count - 1, section: 0)
         tableView.insertRows(at: [cellIndex], with: .automatic)
+    }
+    
+    private func edit(task: Task, newName: String) {
+        dataManager.edit(task: task, newName: newName)
     }
 
     private func delete(forRowAt indexPath: IndexPath) {

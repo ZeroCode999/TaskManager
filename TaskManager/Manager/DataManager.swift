@@ -9,15 +9,14 @@ import UIKit
 import CoreData
 
 protocol DataManagerProtocol {
-  func save(_ taskName: String) -> Task
-  func fetchData() -> [Task]
-  func delete(indexPath: IndexPath)
+    func save(_ taskName: String) -> Task
+    func edit(task: Task, newName: String)
+    func fetchData() -> [Task]
+    func delete(indexPath: IndexPath)
 }
 
 final class DataManager: DataManagerProtocol {
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    
-    static let shared = DataManager()
       
     func fetchData() -> [Task] {
         var fetchingTasks = [Task]()
@@ -36,6 +35,11 @@ final class DataManager: DataManagerProtocol {
         taskInstance.name = taskName
         saveContext()
         return taskInstance
+    }
+    
+    func edit(task: Task, newName: String) {
+        task.name = newName
+        saveContext()
     }
     
     func delete(indexPath: IndexPath) {

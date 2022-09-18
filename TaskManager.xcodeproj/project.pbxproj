@@ -18,6 +18,7 @@
 		CEB0598728CE147700154659 /* TaskManagerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB0598628CE147700154659 /* TaskManagerUITests.swift */; };
 		CEB0598928CE147700154659 /* TaskManagerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB0598828CE147700154659 /* TaskManagerUITestsLaunchTests.swift */; };
 		CEB9179028D711CC001D6B7F /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB9178F28D711CC001D6B7F /* DataManager.swift */; };
+		CEB9179228D74844001D6B7F /* AlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB9179128D74844001D6B7F /* AlertController.swift */; };
 		DDBE49E7E08CCC98030A4B08 /* Pods_TaskManager_TaskManagerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 158B9845A847B41303AF874A /* Pods_TaskManager_TaskManagerUITests.framework */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		CEB0598628CE147700154659 /* TaskManagerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerUITests.swift; sourceTree = "<group>"; };
 		CEB0598828CE147700154659 /* TaskManagerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskManagerUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		CEB9178F28D711CC001D6B7F /* DataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataManager.swift; sourceTree = "<group>"; };
+		CEB9179128D74844001D6B7F /* AlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertController.swift; sourceTree = "<group>"; };
 		E3AD3ED0734212D03AB1FBAA /* Pods-TaskManagerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TaskManagerTests.release.xcconfig"; path = "Target Support Files/Pods-TaskManagerTests/Pods-TaskManagerTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,6 +131,7 @@
 			isa = PBXGroup;
 			children = (
 				CEB0596628CE147600154659 /* TaskListViewController.swift */,
+				CEB9179128D74844001D6B7F /* AlertController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -430,6 +433,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEB0596728CE147600154659 /* TaskListViewController.swift in Sources */,
+				CEB9179228D74844001D6B7F /* AlertController.swift in Sources */,
 				CEB9179028D711CC001D6B7F /* DataManager.swift in Sources */,
 				CEB0596328CE147600154659 /* AppDelegate.swift in Sources */,
 				CEB0596D28CE147600154659 /* TaskManager.xcdatamodeld in Sources */,
