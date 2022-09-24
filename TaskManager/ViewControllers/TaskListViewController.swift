@@ -114,6 +114,15 @@ extension TaskListViewController {
         
         return UISwipeActionsConfiguration(actions: [editAction, deleteAction])
     }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let indexPath = tableView.indexPathForSelectedRow {
+            let controller = TasksViewController()
+            controller.taskList = taskList[indexPath.row]
+            tableView.deselectRow(at: indexPath, animated: true)
+            navigationController?.pushViewController(controller, animated: true)
+        }
+    }
 }
 
 // MARK: - Alerts
