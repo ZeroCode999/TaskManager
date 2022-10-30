@@ -32,20 +32,20 @@ final class AlertController: UIAlertController {
         }
     }
     
-    func action(with task: ToDo?, completion: @escaping (String, String) -> Void) {
+    func action(with toDo: ToDo?, completion: @escaping (String, String) -> Void) {
                         
-        if task != nil {
+        if toDo != nil {
             doneButton = "Update"
         }
         
         let saveAction = UIAlertAction(title: "Save", style: .default) { _ in
-            guard let newTask = self.textFields?.first?.text else { return }
-            guard !newTask.isEmpty else { return }
+            guard let newToDo = self.textFields?.first?.text else { return }
+            guard !newToDo.isEmpty else { return }
             
-            if let note = self.textFields?.last?.text, !note.isEmpty {
-                completion(newTask, note)
+            if let newNote = self.textFields?.last?.text, !newNote.isEmpty {
+                completion(newToDo, newNote)
             } else {
-                completion(newTask, "")
+                completion(newToDo, "")
             }
         }
         
@@ -55,13 +55,13 @@ final class AlertController: UIAlertController {
         addAction(cancelAction)
         
         addTextField { textField in
-            textField.placeholder = "New task"
-            textField.text = task?.name
+            textField.placeholder = "Name ToDo"
+            textField.text = toDo?.name
         }
         
         addTextField { textField in
             textField.placeholder = "Note"
-            textField.text = task?.note
+            textField.text = toDo?.note
         }
     }
 }
