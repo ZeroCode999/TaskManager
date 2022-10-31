@@ -16,7 +16,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "204"
             endingLineNumber = "204"
-            landmarkName = "deleteToDo(forRowAt:)"
+            landmarkName = "doneToDo(forRowAt:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
